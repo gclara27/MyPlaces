@@ -10,9 +10,9 @@ import Foundation
 
 import MapKit
 
-enum PlaceType {
-    case GenericPlace
-    case TouristicPlace
+enum PlaceType:Int, Codable {
+    case GenericPlace = 0
+    case TouristicPlace = 1
 }
 
 class Place {
@@ -20,7 +20,7 @@ class Place {
     var PlaceType:PlaceType = .GenericPlace
     var Name:String = ""
     var Description:String = ""
-    var Location:String = ""
+    var Location:CLLocationCoordinate2D!
     var Image:Data? = nil
     
     init() {
@@ -29,13 +29,14 @@ class Place {
     
     init(name:String, description:String, image_in:Data?) {
         self.Id = UUID().uuidString
-        self.Name = name
+        self.Name = name 
         self.Description = description
         self.Image = image_in
     }
     
-    init(type:PlaceType, name:String, description:String, image_in:Data?) {
+    init(type:PlaceType, name:String, description:String, image_in:Data) {
         self.Id = UUID().uuidString
+        self.PlaceType = type
         self.Name = name
         self.Description = description
         self.Image = image_in
