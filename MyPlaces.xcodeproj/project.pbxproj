@@ -19,6 +19,7 @@
 		8552F2A7215AE1E500733497 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552F2A6215AE1E500733497 /* Place.swift */; };
 		8552F2A9215AE1FE00733497 /* PlaceTourist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552F2A8215AE1FE00733497 /* PlaceTourist.swift */; };
 		8552F2AB215AE22D00733497 /* ManagerPlaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8552F2AA215AE22D00733497 /* ManagerPlaces.swift */; };
+		859E73A821752BE900D64F83 /* ManagerLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859E73A721752BE900D64F83 /* ManagerLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		8552F2A6215AE1E500733497 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		8552F2A8215AE1FE00733497 /* PlaceTourist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTourist.swift; sourceTree = "<group>"; };
 		8552F2AA215AE22D00733497 /* ManagerPlaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerPlaces.swift; sourceTree = "<group>"; };
+		859E73A721752BE900D64F83 /* ManagerLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerLocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				8552F2A6215AE1E500733497 /* Place.swift */,
 				8552F2A8215AE1FE00733497 /* PlaceTourist.swift */,
 				8552F2AA215AE22D00733497 /* ManagerPlaces.swift */,
+				859E73A721752BE900D64F83 /* ManagerLocation.swift */,
 			);
 			path = MyPlaces;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				8552B0882155875A0034C1BC /* SecondViewController.swift in Sources */,
 				8552B0842155875A0034C1BC /* AppDelegate.swift in Sources */,
 				8552B0862155875A0034C1BC /* FirstViewController.swift in Sources */,
+				859E73A821752BE900D64F83 /* ManagerLocation.swift in Sources */,
 				8552B09821558E970034C1BC /* DetailController.swift in Sources */,
 				8552F2AB215AE22D00733497 /* ManagerPlaces.swift in Sources */,
 				8552F2A7215AE1E500733497 /* Place.swift in Sources */,
