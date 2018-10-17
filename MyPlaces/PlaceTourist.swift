@@ -16,8 +16,8 @@ class PlaceTourist: Place {
         PlaceType = .TouristicPlace
     }
     
-    init(name:String, description:String, discountTourist:String, image_in:Data?) {
-        super.init(type:.TouristicPlace, name:name, description:description, image_in:image_in!)
+    init(name:String, description:String, discountTourist:String, image_in:Data) {
+        super.init(type:.TouristicPlace, name:name, description:description, image_in:image_in)
         self.DiscountTourist = discountTourist
     }
 }

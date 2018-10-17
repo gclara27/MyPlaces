@@ -25,6 +25,7 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     var activeField:UIView!
     var lastOffSet:CGPoint!
     
+    
     let pickerElems1 = ["Generic", "Touristic"]
     
     @IBOutlet weak var descField: UITextView!
@@ -193,24 +194,40 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
 
     @IBAction func btnUpdateClicked(_ sender: Any) {
         // If operation is NEW then create a new Place
-        if (place != nil){
+        if (btnUpdate.titleLabel?.text ==  "New"){
+            // get selected type
             let selectedType = typePicker.selectedRow(inComponent: 0)
-            switch selectedType {
-            case 1:
-                // get selectd image
-                var data:Data? = nil
-                data = imagePicked.image?.jpegData(compressionQuality: 1.0)
-                
-                let newPlace = Place.init(type: .GenericPlace, name: "", description: "", image_in: data)
-                
-            default:
-                let newPlace = Place.init()
+            if (selectedType == 0){
                 
             }
+            
+            // get selectd image
+            var data:Data? = nil
+            data = imagePicked.image?.jpegData(compressionQuality: 1.0)
+            
+            let name = nameField.text
+            let notes = descField.text
+            
+            let userSel: PlaceType
+            if (selectedType == 0){
+                userSel = PlaceType.GenericPlace
+            }
+            else{
+                userSel = PlaceType.TouristicPlace
+            }
+            
+            let newPlace = Place.init(type: userSel , name: name ?? "", description: notes ?? "", image_in: data)
+            
+            let manager = ManagerPlaces.shared()
+            manager.Append(newPlace)
+            
         }
         else{
-        // If peration is UPDATE then modify Places's Name an Description
-            
+        // If operation is UPDATE then modify Places's Name an Description
+            if (place != nil) {
+                place?.Name = nameField.text ?? ""
+                place?.Description = descField.text ?? ""
+            }
         }
     }
     

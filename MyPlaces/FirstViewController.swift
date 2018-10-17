@@ -47,7 +47,7 @@ class FirstViewController: UITableViewController {
         //print("Elemnto seleccionado \(place?.Description ?? "" )")
         
         let dc:DetailController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DetailController") as! DetailController
-        dc.place = place
+        dc.place = place   // Cargamos en el Place del DC el place seleccionado
         present(dc, animated: true, completion: nil)    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
