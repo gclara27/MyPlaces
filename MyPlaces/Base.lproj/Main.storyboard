@@ -204,6 +204,9 @@
                                                 <rect key="frame" x="165" y="524" width="45" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" title="Delete"/>
+                                                <connections>
+                                                    <action selector="btnDeletePlaceClicked:" destination="QBh-Mf-C0O" eventType="touchUpInside" id="iz7-by-Pls"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKh-Gr-Jp5">
                                                 <rect key="frame" x="320" y="524" width="48" height="30"/>
