@@ -20,14 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Add items to the array of places
-        var place = Place(name: "Place 1", description: "Place one", image_in: nil)
+        /*var place = Place(name: "Place 1", description: "Place one", image_in: nil)
         manager.Append(place)
         
         place = Place(name: "Place 2", description: "Place two", image_in: nil)
         manager.Append(place)
         
         place = Place(name: "Place 3", description: "Place three", image_in: nil)
-        manager.Append(place)
+        manager.Append(place)*/
         
         return true
     }

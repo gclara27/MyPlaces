@@ -62,15 +62,19 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         
         
         // Do any additional setup after loading the view.
-        descField.text = place?.Description
-        nameField.text = place?.Name
+        descField.text = place?.description
+        nameField.text = place?.name
+        
+        //Load the stored image from the file system
+        let manager = ManagerPlaces.shared()
+        imagePicked.image = UIImage(contentsOfFile: manager.getPathImage(p: place!))
         
         if (place == nil){
             btnUpdate.setTitle("New", for: UIControl.State.normal)
             typePicker.selectRow(0, inComponent: 0, animated: false)
         }
         else{
-            typePicker.selectRow(place?.PlaceType.rawValue ?? 0, inComponent: 0, animated: false)
+            typePicker.selectRow((place?.type.rawValue)!, inComponent: 0, animated: false)
         }
     }
 
@@ -208,12 +212,12 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
             let name = nameField.text
             let notes = descField.text
             
-            let userSel: PlaceType
+            let userSel: PlacesTypes
             if (selectedType == 0){
-                userSel = PlaceType.GenericPlace
+                userSel = PlacesTypes.GenericPlace
             }
             else{
-                userSel = PlaceType.TouristicPlace
+                userSel = PlacesTypes.TouristicPlace
             }
             
             let newPlace = Place.init(type: userSel , name: name ?? "", description: notes ?? "", image_in: data)
@@ -225,10 +229,19 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         else{
         // If operation is UPDATE then modify Places's Name an Description
             if (place != nil) {
-                place?.Name = nameField.text ?? ""
-                place?.Description = descField.text ?? ""
+                place?.name = nameField.text ?? ""
+                place?.description = descField.text ?? ""
             }
         }
+        let manager = ManagerPlaces.shared()
+        manager.updateObservers()
+        dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func btnDeletePlaceClicked(_ sender: Any) {
+        let manager = ManagerPlaces.shared()
+        manager.Remove(place!)
+        manager.updateObservers()
+        dismiss(animated: true, completion: nil)
+    }
 }

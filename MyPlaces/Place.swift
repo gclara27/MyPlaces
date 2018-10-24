@@ -10,36 +10,80 @@ import Foundation
 
 import MapKit
 
-enum PlaceType:Int, Codable {
+enum PlacesTypes:Int, Codable {
     case GenericPlace = 0
     case TouristicPlace = 1
 }
 
-class Place {
-    var Id:String = ""
-    var PlaceType:PlaceType = .GenericPlace
-    var Name:String = ""
-    var Description:String = ""
-    var Location:CLLocationCoordinate2D!
-    var Image:Data? = nil
-    
+// Define the structure with the name of the poperties for the JSON string
+enum CodingKeys: String, CodingKey{
+    case id
+    case description
+    case name
+    case type
+    case latitude
+    case longitude
+}
+
+class Place: Codable {
+        
+    var id:String = ""
+    var type:PlacesTypes = .GenericPlace
+    var name:String = ""
+    var description:String = ""
+    var location:CLLocationCoordinate2D!
+    var image:Data? = nil
+
     init() {
-        self.Id = UUID().uuidString
+        self.id = UUID().uuidString
     }
     
     init(name:String, description:String, image_in:Data?) {
-        self.Id = UUID().uuidString
-        self.Name = name 
-        self.Description = description
-        self.Image = image_in
+        self.id = UUID().uuidString
+        self.name = name
+        self.description = description
+        self.image = image_in
     }
     
-    init(type:PlaceType, name:String, description:String, image_in:Data?) {
-        self.Id = UUID().uuidString
-        self.PlaceType = type
-        self.Name = name
-        self.Description = description
-        self.Image = image_in
-        self.Location = ManagerLocation.GetLocation()
+    init(type:PlacesTypes, name:String, description:String, image_in:Data?) {
+        self.id = UUID().uuidString
+        self.type = type
+        self.name = name
+        self.description = description
+        self.image = image_in
+        self.location = ManagerLocation.GetLocation()
     }
+    
+    // Methods to work with JSON serializaion/deserialization
+     
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        // encode all Places's properties
+        try container.encode(id, forKey: .id)
+        try container.encode(type, forKey: .type)
+        try container.encode(name, forKey: .name)
+        try container.encode(description, forKey: .description)
+        try container.encode(location.latitude, forKey: .latitude)
+        try container.encode(location.longitude, forKey: .longitude)
+    }
+    
+    
+    func decode(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        id = try container.decode(String.self, forKey: .id)
+        type = try container.decode(PlacesTypes.self, forKey: .type)
+        name = try container.decode(String.self, forKey: .name)
+        
+        let latitude = try container.decode(Double.self, forKey: .latitude)
+        let longitude = try container.decode(Double.self, forKey: .longitude)
+        location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
+        try decode(from: decoder)
+    }
+ 
 }

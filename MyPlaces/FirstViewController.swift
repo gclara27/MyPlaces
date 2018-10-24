@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UITableViewController {
+class FirstViewController: UITableViewController, ManagerPlacesObserver {
     
     let m_provider:ManagerPlaces = ManagerPlaces.shared()
     
@@ -18,6 +18,10 @@ class FirstViewController: UITableViewController {
         let view: UITableView = (self.view as? UITableView)!;
         view.delegate = self
         view.dataSource = self
+        
+        // Add the view to the observer in order the list to be updated each time a place is moified
+        let manager = ManagerPlaces.shared()
+        manager.addObserver(object: self)
         
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -73,7 +77,7 @@ class FirstViewController: UITableViewController {
         
         // Get the item from the places array
         let place = m_provider.GetItemAt(position: indexPath.row)
-        label.text = place?.Description
+        label.text = place?.name
         
         label.sizeToFit()
         
@@ -87,6 +91,21 @@ class FirstViewController: UITableViewController {
 
     }
     
+    // Methods from the protocol ManagerPlacesObserver
+    func onPlacesChange() {
+        // each time a place is changed the list is update
+        let view: UITableView = (self.view as? UITableView)!;
+        view.reloadData()
+    }
     
+    
+/*    override func viewWillAppear(_ animated: Bool) {
+        // With the following lines we reaload the table with the new values from Places after we dismissed the DetailView
+        let view: UITableView = (self.view as? UITableView)!;
+        view.reloadData()
+*/
 }
+    
+
+
 
