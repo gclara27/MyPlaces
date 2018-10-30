@@ -10,23 +10,24 @@ import Foundation
 
 import MapKit
 
-enum PlacesTypes:Int, Codable {
-    case GenericPlace = 0
-    case TouristicPlace = 1
-}
-
-// Define the structure with the name of the poperties for the JSON string
-enum CodingKeys: String, CodingKey{
-    case id
-    case description
-    case name
-    case type
-    case latitude
-    case longitude
-}
-
 class Place: Codable {
-        
+    
+    enum PlacesTypes:Int, Codable {
+        case GenericPlace = 0
+        case TouristicPlace = 1
+    }
+    
+    // Define the structure with the name of the poperties for the JSON string
+    enum CodingKeys: String, CodingKey{
+        case id
+        case description
+        case name
+        case type
+        case latitude
+        case longitude
+    }
+    
+    // Class properties
     var id:String = ""
     var type:PlacesTypes = .GenericPlace
     var name:String = ""

@@ -8,11 +8,14 @@
 
 import Foundation
 
-enum CodingKeysTourist: String, CodingKey {
-    case discountTourist
-}
+
 
 class PlaceTourist: Place {
+    enum CodingKeysTourist: String, CodingKey {
+        case discountTourist
+    }
+    
+    //Class properties
     var DiscountTourist:String = ""
     
     override init() {

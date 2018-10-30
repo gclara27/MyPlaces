@@ -9,7 +9,6 @@
 import Foundation
 
 
-
 class ManagerPlaces: Codable {
     var places = [Place]()      //Contains all Places
     
@@ -165,10 +164,10 @@ class ManagerPlaces: Codable {
         
         while(!objectsArrayForType.isAtEnd) {
             let object = try objectsArrayForType.nestedContainer(keyedBy: PlacesTypeKey.self)
-            let type = try object.decode(PlacesTypes.self, forKey: PlacesTypeKey.type)
+            let type = try object.decode(Place.PlacesTypes.self, forKey: PlacesTypeKey.type)
             
             switch type {
-            case PlacesTypes.TouristicPlace:
+            case .TouristicPlace:
                 self.Append(try tmp_array.decode(PlaceTourist.self))
             default :
                 self.Append(try tmp_array.decode(Place.self)) }

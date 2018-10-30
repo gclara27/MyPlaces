@@ -66,8 +66,10 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         nameField.text = place?.name
         
         //Load the stored image from the file system
-        let manager = ManagerPlaces.shared()
-        imagePicked.image = UIImage(contentsOfFile: manager.getPathImage(p: place!))
+        if (place != nil){
+            let manager = ManagerPlaces.shared()
+            imagePicked.image = UIImage(contentsOfFile: manager.getPathImage(p: place!))
+        }
         
         if (place == nil){
             btnUpdate.setTitle("New", for: UIControl.State.normal)
@@ -212,12 +214,12 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
             let name = nameField.text
             let notes = descField.text
             
-            let userSel: PlacesTypes
+            let userSel: Place.PlacesTypes
             if (selectedType == 0){
-                userSel = PlacesTypes.GenericPlace
+                userSel = .GenericPlace
             }
             else{
-                userSel = PlacesTypes.TouristicPlace
+                userSel = .TouristicPlace
             }
             
             let newPlace = Place.init(type: userSel , name: name ?? "", description: notes ?? "", image_in: data)
