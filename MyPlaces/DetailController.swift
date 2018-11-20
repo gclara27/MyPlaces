@@ -28,6 +28,8 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     
     let pickerElems1 = ["Generic", "Touristic"]
     
+    let m_locationManager:ManagerLocation = ManagerLocation.shared()
+    
     @IBOutlet weak var descField: UITextView!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var constraintHeight: NSLayoutConstraint!
@@ -224,6 +226,9 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
             
             let newPlace = Place.init(type: userSel , name: name ?? "", description: notes ?? "", image_in: data)
             
+            // get location from the CLLocationManager
+            newPlace.location = m_locationManager.GetLocation()
+            
             let manager = ManagerPlaces.shared()
             manager.Append(newPlace)
             
@@ -246,4 +251,9 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
         manager.updateObservers()
         dismiss(animated: true, completion: nil)
     }
+    
+    @IBAction func btnCancelClicked(_ sender: Any) {
+        closeDetail(sender)
+    }
+    
 }

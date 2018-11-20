@@ -11,6 +11,9 @@ import UIKit
 class FirstViewController: UITableViewController, ManagerPlacesObserver {
     
     let m_provider:ManagerPlaces = ManagerPlaces.shared()
+    let m_locationManager :ManagerLocation = ManagerLocation.shared()
+    
+    @IBOutlet var table: UITableView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,7 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
         let view: UITableView = (self.view as? UITableView)!;
         view.delegate = self
         view.dataSource = self
+        view.separatorColor = UIColor(white: 0.95, alpha: 1)
         
         // Add the view to the observer in order the list to be updated each time a place is moified
         let manager = ManagerPlaces.shared()
@@ -33,7 +37,6 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Number of elements from the manager
-        
         return m_provider.GetCount()
     }
 
@@ -46,7 +49,7 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Detectar pulsación en un elemento
         
-        //Select corresponding Place from the array
+        // Select corresponding Place from the array
         let place = m_provider.GetItemAt(position: indexPath.row)
         //print("Elemnto seleccionado \(place?.Description ?? "" )")
         
@@ -60,6 +63,37 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? TableCell else { return UITableViewCell() }
+        
+        
+        // Get the item from the places array
+        let place = m_provider.GetItemAt(position: indexPath.row)
+        
+        cell.nameLabel.text = place?.name
+        if place?.type.rawValue == 0 {
+            cell.typeLabel.text = "Generic"
+        }
+        else
+        {
+            cell.typeLabel.text = "Touristic"
+        }
+        
+        if (place?.image != nil){
+            
+        }
+        
+        //Load the stored image from the file system
+        if (place != nil){
+            let manager = ManagerPlaces.shared()
+            
+            cell.cellImage.image = UIImage(contentsOfFile: manager.getPathImage(p: place!))
+        }
+
+        return cell
+        
+    }
+/*    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Devolver una instancia de la clase UITableViewCell que pinte la fila seleccionada
 
         let cell = UITableViewCell()
@@ -90,7 +124,7 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
         return cell
 
     }
-    
+  */
     // Methods from the protocol ManagerPlacesObserver
     func onPlacesChange() {
         // each time a place is changed the list is update
@@ -99,6 +133,23 @@ class FirstViewController: UITableViewController, ManagerPlacesObserver {
     }
     
     
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            let place = m_provider.GetItemAt(position: indexPath.row)
+
+            let manager = ManagerPlaces.shared()
+            manager.Remove(place!)
+            manager.updateObservers()
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.endUpdates()
+        }
+    }
+    
+    
+ 
 /*    override func viewWillAppear(_ animated: Bool) {
         // With the following lines we reaload the table with the new values from Places after we dismissed the DetailView
         let view: UITableView = (self.view as? UITableView)!;

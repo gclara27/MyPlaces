@@ -52,7 +52,6 @@ class Place: Codable {
         self.name = name
         self.description = description
         self.image = image_in
-        self.location = ManagerLocation.GetLocation()
     }
     
     // Methods to work with JSON serializaion/deserialization
@@ -76,7 +75,7 @@ class Place: Codable {
         id = try container.decode(String.self, forKey: .id)
         type = try container.decode(PlacesTypes.self, forKey: .type)
         name = try container.decode(String.self, forKey: .name)
-        
+        description = try container.decode(String.self, forKey: .description)
         let latitude = try container.decode(Double.self, forKey: .latitude)
         let longitude = try container.decode(Double.self, forKey: .longitude)
         location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
